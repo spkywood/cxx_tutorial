@@ -1,24 +1,25 @@
 #ifndef _MYSINGLETON_H_
 #define _MYSINGLETON_H_
 
-// 单例模式
+// 鍗曚緥妯″紡
 
 #include <assert.h>
-//#include <pthread.h>
+// #include <pthread.h>
 #include <stdlib.h> // atexit
 
 #include "noncopyable.h"
 
-namespace clay {
-	
-	template<typename T>
+namespace clay
+{
+
+	template <typename T>
 	class Singleton : noncopyable
 	{
 	public:
 		Singleton() = delete;
 		~Singleton() = delete;
 
-		static T& instance()
+		static T &instance()
 		{
 			pthread_once(&ponce_, &Singleton::init);
 			assert(value_ != NULL);
@@ -26,7 +27,7 @@ namespace clay {
 		}
 
 	private:
-		// 私有成员函数
+		// 绉佹湁鎴愬憳鍑芥暟
 		static void init()
 		{
 		}
@@ -36,7 +37,7 @@ namespace clay {
 		}
 
 	private:
-		// 私有成员变量
+		// 绉佹湁鎴愬憳鍙橀噺
 	};
 
 }

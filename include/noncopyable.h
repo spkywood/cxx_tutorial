@@ -4,18 +4,18 @@
 namespace clay
 {
 
-	class noncopyable
-	{
-	public:
-		// øΩ±¥ππ‘Ï∫Ø ˝
-		noncopyable(const noncopyable&) = delete;
-		void operator=(const noncopyable&) = delete;
+    class noncopyable
+    {
+    public:
+        // Êã∑Ë¥ùÊûÑÈÄ†ÂáΩÊï∞
+        noncopyable(const noncopyable &) = delete;
+        void operator=(const noncopyable &) = delete;
 
-	protected:
-		noncopyable() = default;
-		~noncopyable() = default;
-	};
+    protected:
+        noncopyable() = default;
+        ~noncopyable() = default;
+    };
 
-}  // namespace clay
+} // namespace clay
 
 #endif

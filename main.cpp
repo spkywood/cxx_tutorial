@@ -5,6 +5,7 @@
 
 #include "include/MySort.h"
 #include "include/summary.h"
+#include "include/MyMath.h"
 
 #include "include/ConstKeyWords.h"
 
@@ -12,39 +13,42 @@
 
 using namespace std;
 
-int* sum(int a, int b) {
+int *sum(int a, int b)
+{
 	std::cout << "call (a + b) = ";
 	int c = (a + b);
 	return &c;
 }
 
-int* mul(int a, int b) {
+int *mul(int a, int b)
+{
 	std::cout << "call (a * b) = ";
 	int c = (a * b);
 	return &c;
 }
 
-int* (*pf)(int, int);
+int *(*pf)(int, int);
 
 int main()
 {
-	int&& a = 10;
-	foo(static_cast<int&&>(a));
+	int &&a = 10;
+	foo(static_cast<int &&>(a));
 	foo(std::move(a));
-	cout << "Hello CMake." << endl;
+	std::cout << "Hello CMake." << std::endl;
 
-	std::vector<int> nums{10, 2, 81, 9, 16, 77, 3, 15, 43, 23, 61, 45, 51};
+	std::vector<int> nums;
+	nums = {10, 2, 81, 9, 16, 77, 3, 15, 43, 23, 61, 45, 51};
 
 	// 排序算法
 
 	MySort my_sort;
 	my_sort.bubble(nums);
-	//my_sort.insertion(nums);
-	//my_sort.selection(nums);
-	//my_sort.quick(nums, 0, nums.size()-1);
-	//my_sort.heap(nums);
+	// my_sort.insertion(nums);
+	// my_sort.selection(nums);
+	// my_sort.quick(nums, 0, nums.size()-1);
+	// my_sort.heap(nums);
 
-	int* p = &nums[0];
+	int *p = &nums[0];
 
 	std::cout << "<<< -----------------------------------" << std::endl;
 	std::cout << "[";
@@ -57,8 +61,6 @@ int main()
 
 	std::cout << "<<< -----------------------------------" << std::endl;
 
-	
-
 	std::cout << "pointer sizeof = " << sizeof(p) << std::endl;
 
 	std::cout << "[";
@@ -68,7 +70,7 @@ int main()
 	}
 	std::cout << "]\n";
 
-	// const 
+	// const
 	std::cout << "<<< -----------------------------------" << std::endl;
 
 	// 1. 修饰变量
@@ -77,16 +79,16 @@ int main()
 	int c = 4000;
 	const int d = 1000;
 
-	const int* p1 = &b;	// const 位于 *的左侧: 用来修饰指针所指向的变量，指针指向常量(一般为const 变量)。
-	int* const p2 = &c;	// const 位于 *的右侧: 用来修饰指针本身，指针是常量(指向的地址固定)。
-	const int* const p3 = &d;	// 两侧均出现：指向常量，指针也为常量
+	const int *p1 = &b;		  // const 位于 *的左侧: 用来修饰指针所指向的变量，指针指向常量(一般为const 变量)。
+	int *const p2 = &c;		  // const 位于 *的右侧: 用来修饰指针本身，指针是常量(指向的地址固定)。
+	const int *const p3 = &d; // 两侧均出现：指向常量，指针也为常量
 
 	p1 = &c;
 	c = 4001;
-	//p2 = &b;	// error
-	// 可以通过变量本身去修改
+	// p2 = &b;	// error
+	//  可以通过变量本身去修改
 	b = 600;
-	std::cout << *p1 << std::endl; // 
+	std::cout << *p1 << std::endl; //
 	std::cout << *p2 << std::endl; // 600
 	std::cout << *p3 << std::endl; // 600
 
@@ -98,18 +100,17 @@ int main()
 	std::cout << "<<< -----------------------------------" << std::endl;
 
 	ConstKeyWords ckw(1, 2, 3);
-	std::cout << ckw.getA() << std::endl; // 
-	std::cout << ckw.getB() << std::endl; // 
-	std::cout << ckw.getC() << std::endl; // 
+	std::cout << ckw.getA() << std::endl; //
+	std::cout << ckw.getB() << std::endl; //
+	std::cout << ckw.getC() << std::endl; //
 	std::cout << "<<< -----------------------------------" << std::endl;
 
 	// 3. 修饰函数，位于函数声明前，即返回值是常量
 	// 4. 修饰函数的传参，防止被修改
 
 	const char str1[13]{"hello world!"};
-	const char* p_str1  = str1;
-	const char* p2_str1 = &str1[0];
-
+	const char *p_str1 = str1;
+	const char *p2_str1 = &str1[0];
 
 	// sizeof 是运算符，结果在编译时得到
 	// sizeof参数可以是任何数据的类型或者数据（sizeof参数不退化）
@@ -120,7 +121,6 @@ int main()
 		std::cout << *p_str1;
 		++p_str1;
 	}
-
 
 	// 函数指针
 	std::cout << "\n<<< -----------------------------------" << std::endl;
@@ -138,42 +138,40 @@ int main()
 
 	std::cout << "\n<<< -----------------------------------" << std::endl;
 
-	const char* str3 = "name";
+	const char *str3 = "name";
 	std::string str4 = "name";
 
-	std::cout << "str3 size = " << sizeof(*str3) << std::endl;	// 首字母n的长度，占一个字节
-	std::cout << "str3 size = " << sizeof(str3) << std::endl;	// 指针str3的长度，64位下8个字节
-	std::cout << "str3 size = " << *str3 << std::endl; // 指针指向 首字母 n
+	std::cout << "str3 size = " << sizeof(*str3) << std::endl; // 首字母n的长度，占一个字节
+	std::cout << "str3 size = " << sizeof(str3) << std::endl;  // 指针str3的长度，64位下8个字节
+	std::cout << "str3 size = " << *str3 << std::endl;		   // 指针指向 首字母 n
 	std::cout << "str4 size = " << str4.size() << std::endl;
 
 	// 变量类型的长度
 	std::cout << "\n<<< -----------------------------------" << std::endl;
-	std::cout << "char size = " << sizeof(char) << std::endl;			// char 1个字节：8位
-	std::cout << "short size = " << sizeof(short) << std::endl;			// short 2个字节，16位
-	std::cout << "int size = " << sizeof(int) << std::endl;				// int 4个字节，32位
-	std::cout << "uint32_t size = " << sizeof(uint32_t) << std::endl;	// uint32_t 4个字节，32位
-	std::cout << "uint64_t size = " << sizeof(uint64_t) << std::endl;	// uint64_t 8个字节，64位
-	std::cout << "float size = " << sizeof(float) << std::endl;			// float 4个字节，32位
-	std::cout << "long size = " << sizeof(long) << std::endl;			// long 4个字节，32位
-	std::cout << "double size = " << sizeof(double) << std::endl;		// double 8个字节，64位
-
+	std::cout << "char size = " << sizeof(char) << std::endl;		  // char 1个字节：8位
+	std::cout << "short size = " << sizeof(short) << std::endl;		  // short 2个字节，16位
+	std::cout << "int size = " << sizeof(int) << std::endl;			  // int 4个字节，32位
+	std::cout << "uint32_t size = " << sizeof(uint32_t) << std::endl; // uint32_t 4个字节，32位
+	std::cout << "uint64_t size = " << sizeof(uint64_t) << std::endl; // uint64_t 8个字节，64位
+	std::cout << "float size = " << sizeof(float) << std::endl;		  // float 4个字节，32位
+	std::cout << "long size = " << sizeof(long) << std::endl;		  // long 4个字节，32位
+	std::cout << "double size = " << sizeof(double) << std::endl;	  // double 8个字节，64位
 
 	// 虚函数，虚表，虚指针
 	std::cout << "\n<<< -----------------------------------" << std::endl;
 
-	Human* p_human = new Human();
-	Dog* p_dog = new Dog();
+	Human *p_human = new Human();
+	Dog *p_dog = new Dog();
 
-	ISpeaker* is_p1 = static_cast<ISpeaker*>(p_human);  // (ISpeaker*)p_human;
-	ISpeaker* is_p2 = static_cast<ISpeaker*>(p_dog);    // (ISpeaker*)p_dog;
+	ISpeaker *is_p1 = static_cast<ISpeaker *>(p_human); // (ISpeaker*)p_human;
+	ISpeaker *is_p2 = static_cast<ISpeaker *>(p_dog);	// (ISpeaker*)p_dog;
 
-
-	//ISpeaker* is_p1 = new Human();
-	//ISpeaker* is_p2 = new Dog();
+	// ISpeaker* is_p1 = new Human();
+	// ISpeaker* is_p2 = new Dog();
 
 	// 多态
 	// 1. 虚函数是在基类中被声明为virtual，并在派生类中重新定义的成员函数，可实现成员函数的动态覆盖（Override）
-	// 
+	//
 	// 虚函数表
 	// 2. 编译器会为每个有虚函数的类创建一个虚函数表，该虚函数表将被该类的所有对象共享
 	//    类的每个虚成员占据虚函数表中的一行。如果类中有N个虚函数，那么其虚函数表将有N4
@@ -202,6 +200,9 @@ int main()
 	//
 	is_p1->speak();
 	is_p2->speak();
+
+	std::cout << "\n<<< -----------------------------------" << std::endl;
+	std::cout << sizeof(__int64) << std::endl;
 
 	return 0;
 }

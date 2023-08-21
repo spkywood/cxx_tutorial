@@ -1,8 +1,8 @@
 /**
-* C++ÃæÏò¶ÔÏóÈı´óÌØĞÔ£º·â×°£¨ÀàµÄË¼Ïë£¬Ò»ÇĞ½Ô¶ÔÏó£©¡¢¼Ì³Ğ£¨´úÂë¸´ÓÃ£©¡¢¶àÌ¬
-* 1. ±àÒëÊ±¶àÌ¬£ºÖØÔØ
-* 2. ÔËĞĞÊ±¶àÌ¬£ºĞéº¯ÊıÊµÏÖ
-*/
+ * C++é¢å‘å¯¹è±¡ä¸‰å¤§ç‰¹æ€§ï¼šå°è£…ï¼ˆç±»çš„æ€æƒ³ï¼Œä¸€åˆ‡çš†å¯¹è±¡ï¼‰ã€ç»§æ‰¿ï¼ˆä»£ç å¤ç”¨ï¼‰ã€å¤šæ€
+ * 1. ç¼–è¯‘æ—¶å¤šæ€ï¼šé‡è½½
+ * 2. è¿è¡Œæ—¶å¤šæ€ï¼šè™šå‡½æ•°å®ç°
+ */
 
 #include <iostream>
 
@@ -10,10 +10,11 @@ class ISpeaker
 {
 protected:
 	size_t b;
+
 public:
 	ISpeaker(size_t _b) : b(_b) {}
-	virtual void speak() = 0;		// Ğéº¯Êı
-	
+	virtual void speak() = 0; // è™šå‡½æ•°
+
 	~ISpeaker() {}
 };
 
@@ -22,7 +23,8 @@ class Dog : public ISpeaker
 public:
 	Dog() : ISpeaker(0) {}
 
-	virtual void speak() override {
+	virtual void speak() override
+	{
 		std::cout << "woof, woof ... " << b << std::endl;
 	}
 
@@ -34,8 +36,9 @@ class Human : public ISpeaker
 public:
 	Human() : ISpeaker(1), c(2) {}
 
-	virtual void speak() override {
-		std::cout << "hello, hello ... " << b << " - "  << c << std::endl;
+	virtual void speak() override
+	{
+		std::cout << "hello, hello ... " << b << " - " << c << std::endl;
 	}
 
 	~Human() {}

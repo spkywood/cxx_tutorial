@@ -1,52 +1,56 @@
 # C++ 
 
-## 1. ָ�������
+## 1. 指针和引用
 
-1. ָ����һ������, �洢����һ����ַ��ָ���ڴ��һ���洢��Ԫ��ַ.
-2. �����Ǳ�����һ����������ԭ���ı���ʵ������ͬһ������.
-3. ָ���������ʱ���س�ʼ�������ö���ʱ�����ʼ��
-4. ָ���������ʱ���Գ�ʼ��Ϊ`NULL`�����ò��ܳ�ʼ��Ϊ `NULL`
-5. ָ����������Լ���ʾָ����һ��ͬ���ͱ����ĵ�ַ��һ������ָ�������ָ��
-6. ���õ��������Լ���ʾָ�����ֵ����������
-7. `sizeof`�����������ָ������õ�ָ�����������С;���������ã��õ�������ָ��ı����Ĵ�С��
-8. �ǳ�ָ����ָ�븳ֵ����Ըı�ָ��ֵ�������ڳ�ʼ����������Ϊ��ı����ı�����
-9. `const`����ָ�������`const`����֮ǰ��ָ�������ָ�������ֵ���ɸı䣬ָ��ֵ���Ըı䣻const����֮��ָ�������ָ�������ֵ���Ըı䣬ָ��ֵ�����Ըı䣻const�������ã�const����&֮ǰ�������޸���������ʾ�ı�����ֵ��const����&֮��const�����ñ����ԣ������޸���������ʾ�ı�����ֵ��
+1. 指针是一个变量, 存储的是一个地址，指向内存的一个存储单元地址.
+2. 引用是变量的一个别名，跟原来的变量实质上是同一个东西.
+3. 指针变量定义时不必初始化；引用定义时必须初始化
+4. 指针变量定义时可以初始化为`NULL`；引用不能初始化为 `NULL`
+5. 指针的自增、自减表示指向下一个同类型变量的地址，一般用于指向数组的指针
+6. 引用的自增、自减表示指向变量值的增、减。
+7. `sizeof`运算符作用于指针变量得到指针变量自身大小;作用于引用，得到引用所指向的变量的大小。
+8. 非常指针在指针赋值后可以改变指针值；引用在初始化后不能再作为别的变量的别名。
+9. `const`修饰指针变量，`const`放在之前，指针变量所指向变量的值不可改变，指针值可以改变；const放在之后，指针变量所指向变量的值可以改变，指针值不可以改变；const修饰引用，const放在&之前，不能修改引用所表示的变量的值；const放在&之后，const的作用被忽略，可以修改引用所表示的变量的值。
 
 
-## 2. `struct` �� `class` ����
+## 2. `struct` 和 `class` 区别
 
-1. Ĭ�ϳ�ԱȨ�޲�ͬ��`struct` Ĭ���ǹ��еģ�`class` ��Ĭ����˽�е�
-2. `class`Ĭ����`private`�̳У� ��`struct`Ĭ����`public`�̳�
+1. 默认成员权限不同，`struct` 默认是公有的，`class` 则默认是私有的
+2. `class`默认是`private`继承， 而`struct`默认是`public`继承
 
-## 3. `const`�ı���
+## 3. `const`的变量
 
-- const�������α���
+- const用来修饰变量
 
 ```C++
 const int a = 100;
 int b = 200;
-const int* p1 = &a;			// ָ�볣����ָ��һ������ const���� int
-int* const p2 = &b;			// ����ָ�룬ָ����const���ͣ�ָ���ַ����
-const int* const p3= &b;	// ָ��ָ���ַ�̶�����ַ���ݹ̶�
+const int* p1 = &a;			// 指针常量，指向一个常量 const修饰 int
+int* const p2 = &b;			// 常量指针，指针是const类型，指向地址不变
+const int* const p3= &b;	// 指针指向地址固定，地址数据固定
 ```
 
-- const�������κ���
+- const用来修饰函数
 
 ```
-const int foo(){}			// ��������ֵ��һ������
+const int foo(){}			// 函数返回值是一个常量
 ```
 
-- const����������ĳ�Ա����
+- const用来修饰类的成员函数
 
 ```C++
-int foo() const{}			// readonly function,�������޸�������ݳ�Ա��ֻ�ܵ���const��Ա����
+int foo() const{}			// readonly function,不允许修改类的数据成员，只能调用const成员函数
 ```
 
-## 4. `RAII` ��Դ��ȡ����ʼ��
+## 4. `RAII` 资源获取即初始化
 
 - (Resource Acquisition is Initialization)
-- ���캯�������������Դ���������������ͷ���Դ��
-- `RAII`��ָ���£�����Ӧ��ʹ������������Դ������Դ�Ͷ�����������ڰ󶨡�
-- ����ָ�루`std::shared_ptr`��`std::unique_ptr`����RAII��ߴ�����ʵ�֣�ʹ������ָ�룬����ʵ���Զ����ڴ����
+- 构造函数中申请分配资源，在析构函数中释放资源。
+- `RAII`的指导下，我们应该使用类来管理资源，将资源和对象的生命周期绑定。
+- 智能指针（`std::shared_ptr`和`std::unique_ptr`）即RAII最具代表的实现，使用智能指针，可以实现自动的内存管理
 
-## 5. �������
+## 5. C++面向对象
+
+- 封装：封装的思想，一切皆对象，按类的来设计程序
+- 集成：代码复用
+- 多态：运行时多态使用虚函数来实现，编译时多态，用重载来实现。

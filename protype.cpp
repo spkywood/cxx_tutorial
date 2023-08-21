@@ -2,76 +2,84 @@
 #include <cstdlib>
 #include <cstdint>
 
-
-extern "C" {
+extern "C"
+{
 	struct SpeakTable
 	{
-		void(*speak)(void* ptr);
+		void (*speak)(void *ptr);
 	};
 
-	void __dog_speak(void* ptr) {
-		uint8_t* p = (uint8_t*)ptr;
-		p += sizeof(SpeakTable*);
-		size_t b = *(size_t*)p;
+	void __dog_speak(void *ptr)
+	{
+		uint8_t *p = (uint8_t *)ptr;
+		p += sizeof(SpeakTable *);
+		size_t b = *(size_t *)p;
 		printf("woof, woof ... %llu \n", b);
 	}
 
-	void __human_speak(void* ptr) {
-		uint8_t* p = (uint8_t*)ptr;
-		p += sizeof(SpeakTable*);
-		size_t b = *(size_t*)p;
+	void __human_speak(void *ptr)
+	{
+		uint8_t *p = (uint8_t *)ptr;
+		p += sizeof(SpeakTable *);
+		size_t b = *(size_t *)p;
 		p += sizeof(size_t);
-		size_t c = *(size_t*)p;
+		size_t c = *(size_t *)p;
 		printf("woof, woof ... %llu - %llu \n", b, c);
 	}
 
-	// ÄÚ´æÄ£ÐÍ¡£
+	// ï¿½Ú´ï¿½Ä£ï¿½Í¡ï¿½
 	struct __ispeak
 	{
-		const SpeakTable* vt;
+		const SpeakTable *vt;
 		size_t b;
 	};
 
 	struct __dog
 	{
-		const SpeakTable* vt;
+		const SpeakTable *vt;
 		size_t b;
 	};
 
 	struct __human
 	{
-		const SpeakTable* vt;
+		const SpeakTable *vt;
 		size_t b;
 		size_t c;
 	};
 
-	const static SpeakTable __dogSpeakTable = { __dog_speak };
-	const static SpeakTable __humanSpeakTable = { __human_speak };
+	const static SpeakTable __dogSpeakTable = {__dog_speak};
+	const static SpeakTable __humanSpeakTable = {__human_speak};
 
-	__dog* createDog() {
-		__dog* ptr = (__dog*)malloc(sizeof(__dog));
+	__dog *createDog()
+	{
+		__dog *ptr = (__dog *)malloc(sizeof(__dog));
 		/*
-		* ¶¯Ì¬ÄÚ´æ·ÖÅäº¯Êýmalloc·ÖÅäÄÚ´æÊ±£¬
-		* ¾­³£»á³öÏÖ"È¡Ïû¶ÔNULLÖ¸ÕëµÄ'...'µÄÒýÓÃ"µÄ¾¯¸æ£¬ÕâÊÇÒòÎªÔÚÐ´´úÂëÊ±£¬Ã»ÓÐ¼ÓÅÐ¶ÏÄÚ´æ·ÖÅäÊÇ·ñ·ÖÅä³É¹¦µÄÓï¾äÔì³ÉµÄ¡£
-		*/
-		
-		if (ptr == NULL) {
+		 * ï¿½ï¿½Ì¬ï¿½Ú´ï¿½ï¿½ï¿½äº¯ï¿½ï¿½mallocï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½Ê±ï¿½ï¿½
+		 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"È¡ï¿½ï¿½ï¿½ï¿½NULLÖ¸ï¿½ï¿½ï¿½'...'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½Ä¾ï¿½ï¿½æ£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ã»ï¿½Ð¼ï¿½ï¿½Ð¶ï¿½ï¿½Ú´ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉµÄ¡ï¿½
+		 */
+
+		if (ptr == NULL)
+		{
 			return NULL;
 		}
-		else {
+		else
+		{
 			ptr->vt = &__dogSpeakTable;
 			ptr->b = 0;
 			return ptr;
 		}
 	}
 
-	__human* createHuman() {
-		__human* ptr = (__human*)malloc(sizeof(__human));
+	__human *createHuman()
+	{
+		__human *ptr = (__human *)malloc(sizeof(__human));
 
-		if (ptr == NULL) {
+		if (ptr == NULL)
+		{
 			return NULL;
 		}
-		else {
+		else
+		{
 			ptr->vt = &__humanSpeakTable;
 			ptr->b = 1;
 			ptr->c = 2;
@@ -80,13 +88,13 @@ extern "C" {
 	}
 };
 
-int main() {
-	__dog* p_dog = createDog();
-	__human* p_human = createHuman();
+int main()
+{
+	__dog *p_dog = createDog();
+	__human *p_human = createHuman();
 
-
-	__ispeak* p_s1 = (__ispeak*)p_dog;
-	__ispeak* p_s2 = (__ispeak*)p_human;
+	__ispeak *p_s1 = (__ispeak *)p_dog;
+	__ispeak *p_s2 = (__ispeak *)p_human;
 
 	p_s1->vt->speak(p_s1);
 	p_s2->vt->speak(p_s2);

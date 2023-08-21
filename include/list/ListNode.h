@@ -1,33 +1,33 @@
 
-//ÁĞ±í½ÚµãÄ£°åÀà£¨ÒÔË«ÏòÁ´±íĞÎÊ½ÊµÏÖ£©
+// åˆ—è¡¨èŠ‚ç‚¹æ¨¡æ¿ç±»ï¼ˆä»¥åŒå‘é“¾è¡¨å½¢å¼å®ç°ï¼‰
 template <typename T>
-struct ListNode {
-	T data;				// Êı¾İ
-	ListNode<T> pre;	// Ç°Çı½Úµã
-	ListNode<T> next;	// ºó¼Ì½Úµã
+struct ListNode
+{
+	T data;			  // æ•°æ®
+	ListNode<T> pre;  // å‰é©±èŠ‚ç‚¹
+	ListNode<T> next; // åç»§èŠ‚ç‚¹
 
 	ListNode() {}
 
 	ListNode(T e, ListNode<T> p = NULL, ListNode<T> n = NULL)
-		: data(e), pre(p), next(n) {} //Ä¬ÈÏ¹¹ÔìÆ÷
+		: data(e), pre(p), next(n) {} // é»˜è®¤æ„é€ å™¨
 
-	// ²Ù×÷½Ó¿Ú
-	ListNode<T> insertAsPre(T const& e) {
-		ListNode<T> x = new ListNode(e, pre, this); //´´½¨ĞÂ½Úµã
-		pre->next = x; 
-		pre = x; //ÉèÖÃÕıÏòÁ´½Ó
-		return x; //·µ»ØĞÂ½ÚµãµÄÎ»ÖÃ
+	// æ“ä½œæ¥å£
+	ListNode<T> insertAsPre(T const &e)
+	{
+		ListNode<T> x = new ListNode(e, pre, this); // åˆ›å»ºæ–°èŠ‚ç‚¹
+		pre->next = x;
+		pre = x;  // è®¾ç½®æ­£å‘é“¾æ¥
+		return x; // è¿”å›æ–°èŠ‚ç‚¹çš„ä½ç½®
 	}
-	//½ô¿¿µ±Ç°½ÚµãÖ®Ç°²åÈëĞÂ½Úµã
-	
-	ListNode<T> insertAsNext(T const& e) {
-		ListNode<T> x = new ListNode(e, this, next); //´´½¨ĞÂ½Úµã
-		next->pre = x; 
-		next = x; //ÉèÖÃÄæÏòÁ´½Ó
-		return x; //·µ»ØĞÂ½ÚµãµÄÎ»ÖÃ
+	// ç´§é å½“å‰èŠ‚ç‚¹ä¹‹å‰æ’å…¥æ–°èŠ‚ç‚¹
+
+	ListNode<T> insertAsNext(T const &e)
+	{
+		ListNode<T> x = new ListNode(e, this, next); // åˆ›å»ºæ–°èŠ‚ç‚¹
+		next->pre = x;
+		next = x; // è®¾ç½®é€†å‘é“¾æ¥
+		return x; // è¿”å›æ–°èŠ‚ç‚¹çš„ä½ç½®
 	}
-	//½ôËæµ±Ç°½ÚµãÖ®ºó²åÈëĞÂ½Úµã
+	// ç´§éšå½“å‰èŠ‚ç‚¹ä¹‹åæ’å…¥æ–°èŠ‚ç‚¹
 };
-
-template <typename T>
-ListNode<T>::insertAsPre(T const& e) 
